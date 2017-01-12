@@ -13,7 +13,9 @@ import {
      Alert,
      TextInput,
      TouchableOpacity,
-     StatusBar
+     StatusBar,
+     BackAndroid,
+     ToastAndroid
  } from 'react-native';
 
 
@@ -25,6 +27,8 @@ let Global = require('./../Global');
 
 import Main from './main';
 import FindPWD from './findpwdfirst';
+import Regist from './regist';
+const statusH = StatusBar.currentHeight;
 
 const pros={
   loginName:'a9907356',
@@ -63,8 +67,22 @@ export default class Login extends Component {
    }
 
    componentDidMount () {   
-     this._login();
+    //  this._login();
+     BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
    }
+
+   componentWillUnmount() {
+     BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+   }
+
+   onBackAndroid = () => {
+     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {//最近2秒内按过back键，可以退出应用。
+       return false;
+     }
+     this.lastBackPressed = Date.now();
+     ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+     return true;
+   };
 
    _toFindPWD(){
      const {navigator} = this.props;
@@ -121,7 +139,7 @@ export default class Login extends Component {
            无法登陆?
          </Text>
          <Text style={{color:Global.theme_color,marginBottom:10,marginRight:10,fontSize:12}}
-           onPress={this.onPressButton}>
+           onPress={this._regist.bind(this)}>
            新用户
          </Text>
        </View>
@@ -129,8 +147,14 @@ export default class Login extends Component {
        )
      }
 
-     onPressButton(){
-       console.log('#');
+     _regist(){//TODO
+       const {navigator} = this.props;
+       if (navigator) {
+         navigator.push({
+           name:'regist',
+           component:Regist,
+         })
+       }
      }
 
      _login(){
@@ -175,7 +199,7 @@ export default class Login extends Component {
    },
    container:{
      flex:1,                  //弹性盒子
-     paddingTop:40,
+     paddingTop:60+statusH,
    },
    _btn:{
      width:200,
@@ -190,7 +214,7 @@ export default class Login extends Component {
    },
    _intextinput:{
      width: width - 30,
-     height: 40,
+     height: Global.inputText_height,
      //设置圆角程度
     //  borderRadius: 18,
      //设置相对父控件居中
@@ -201,16 +225,17 @@ export default class Login extends Component {
   //登录按钮View样式
   textLoginViewStyle: {
     width: width - 30,
-    height: 40,
+    height: Global.btnStyle.height,
     backgroundColor: Global.theme_color,
     borderRadius: 4,
     marginTop: 15,
     alignSelf: 'center',
     justifyContent: 'center',
-    alignItems: 'center', },
-    //登录Text文本样式
-    textLoginStyle: {
-      fontSize: 16,
-      color: 'white',
-    },
+    alignItems: 'center',
+  },
+  //登录Text文本样式
+  textLoginStyle: {
+    fontSize: 16,
+    color: 'white',
+  },
  });

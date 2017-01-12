@@ -79,10 +79,10 @@ export default class UserInfo extends Component{
   render(){
     return(
       <View>
-        {/* <StatusBar
+        <StatusBar
           backgroundColor='#00000000'
           translucent={true}
-          showHideTransition='fade'/> */}
+          showHideTransition='fade'/>
         <View style={{flexDirection:'row',alignItems:'center',height:Global.titleBar_height+statusH,paddingTop:statusH,backgroundColor:Global.theme_color_icon}}>
         <TouchableWithoutFeedback  onPress={this._onBack.bind(this)}>
             <Image style={{height:20,width:20,marginLeft:5}} source={require('./../img/titlebar_back.png')}/>

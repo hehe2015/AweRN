@@ -4,23 +4,37 @@ import {
 } from 'react-native';
 
 var Global = {
+  //#63B8FF
+  //#5FCDD7
   theme_color:'#63B8FF',
   theme_color_icon:'#5FCDD7',
 
+  //标题栏颜色（灰黑）
   titleBar_color:'#555',
+  //标题栏高度
   titleBar_height:35,
 
   LoginBean:null,
   theme_bgColor:'#eee',
+
+  //输入框高度
   inputText_height:40,
-  inputText_borderRadius:3,
+  //输入框圆角，按钮圆角
+  theme_borderRadius:3,
   BASEURL:'http://www.chainew.com/MMS/',
+
+  //按钮样式（登陆，找回密码）
   btnStyle:{
-    height: 40,
+    height: 38,
     backgroundColor: this.theme_color,
-    borderRadius: 3,
+    borderRadius: this.theme_borderRadius,
   }
 };
+
+
+/**********************直直的分割线********************************/
+
+
 
 Global.Post = function(method,bodyParams,callback){
   let url = this.BASEURL+method;
